@@ -18,6 +18,7 @@ class SportsCollectionViewController: UICollectionViewController, UICollectionVi
         super.viewDidLoad()
                 
         navigationItem.title = "Sports"
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.yellow]
         navigationController?.navigationBar.prefersLargeTitles = true
         
         collectionView.register(UINib(nibName: "CollectionViewCell", bundle: .main), forCellWithReuseIdentifier: "cell")
@@ -46,7 +47,27 @@ class SportsCollectionViewController: UICollectionViewController, UICollectionVi
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewCell
         
         let url = URL(string: Sports[indexPath.row].strSportThumb)
-        cell.sportImage.kf.setImage(with: url)
+        let processor = DownsamplingImageProcessor(size: cell.sportImage.bounds.size)
+                     |> RoundCornerImageProcessor(cornerRadius: 20)
+        cell.sportImage.kf.indicatorType = .activity
+        cell.sportImage.kf.setImage(
+            with: url,
+            placeholder: UIImage(systemName: "photo"),
+            options: [
+                .processor(processor),
+                .scaleFactor(UIScreen.main.scale),
+                .transition(.fade(1)),
+                .cacheOriginalImage
+            ])
+        {
+            result in
+            switch result {
+            case .success(let value):
+                print("Task done for: \(value.source.url?.absoluteString ?? "")")
+            case .failure(let error):
+                print("Job failed: \(error.localizedDescription)")
+            }
+        }
         
         
         cell.sportName.text = Sports[indexPath.row].strSport
@@ -56,19 +77,21 @@ class SportsCollectionViewController: UICollectionViewController, UICollectionVi
         
         cell.sportImage.layer.cornerRadius = 25
         cell.sportImage.layer.borderColor = CGColor(red: 0.5, green: 0.5, blue: 1.0, alpha: 1.0)
-        cell.sportImage.layer.borderWidth = 3
+        cell.sportImage.layer.borderWidth = 1
         
-        
-    
         
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let leagues = self.storyboard?.instantiateViewController(withIdentifier: "LeaguesTableVC") as! LeaguesTableViewController
+    
+        leagues.sport = Sports[indexPath.row].strSport
+        
         
         navigationController?.pushViewController(leagues, animated: true)
     }
+    
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         cell.contentView.alpha = 0.0
         cell.layer.transform = CATransform3DMakeScale(0.25, 0.25, 0.25)

@@ -10,11 +10,16 @@ import Alamofire
 import Kingfisher
 
 class LeaguesTableViewController: UITableViewController {
-    var Leagues :Array<Welcome> = [Welcome]()
+    
+    var Leagues = [[String: String?]]()
+    
+    var sport: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         tableView.register(UINib(nibName: "CustomLeaguesTableViewCell", bundle: nil), forCellReuseIdentifier: "LeaguesCell")
+        AlamofireMethod(strSport: sport!)
     }
 
     // MARK: - Table view data source
@@ -33,9 +38,11 @@ class LeaguesTableViewController: UITableViewController {
  
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LeaguesCell", for: indexPath) as! CustomLeaguesTableViewCell
-
-        cell.leagueBadge.image = UIImage(named: "TheGodFather")
-        cell.leagueName.text = "Premier League"
+        
+        let url = URL(string: (Leagues[indexPath.row]["strBadge"]! ?? ""))!
+        cell.leagueBadge.kf.setImage(with: url)
+       
+        cell.leagueName.text = Leagues[indexPath.row]["strLeague"] as! String
 
         return cell
     }
@@ -74,25 +81,8 @@ class LeaguesTableViewController: UITableViewController {
     }
     */
 
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    func AlamofireMethod ()-> Void{
-        AF.request("https://www.thesportsdb.com/api/v1/json/2/search_all_leagues.php?c=England"
+    func AlamofireMethod (strSport: String)-> Void{
+        AF.request("https://www.thesportsdb.com/api/v1/json/2/search_all_leagues.php?s=\(strSport)"
         )
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
@@ -100,14 +90,14 @@ class LeaguesTableViewController: UITableViewController {
                 switch response.result {
                 case .success:
                     print("Validation Successful")
-                    let data =     response.value
+                    let data = response.value
                     
                     do{
                         let  decoder:  JSONDecoder  = JSONDecoder();
                         let array = try decoder.decode(Welcome.self , from: data!)
                         self.Leagues.removeAll();
-                        self.Leagues = array.countrys as! Array<Welcome>
-                        //print("Sports count \(self.Leagues.count)")
+                        self.Leagues = array.countrys
+                        print("Sports count \(self.Leagues)")
                         /// Reload Data into grid
                         DispatchQueue.main.async {
                             self.tableView.reloadData()
@@ -118,7 +108,8 @@ class LeaguesTableViewController: UITableViewController {
                    }
                     
                 case .failure(_): break
-                }
             }
+        }
     }
+    
 }
