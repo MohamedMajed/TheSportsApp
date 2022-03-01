@@ -8,8 +8,8 @@
 import UIKit
 
 class CustomLeaguesTableViewCell: UITableViewCell {
-    @IBOutlet weak var leagueName: UILabel!
     
+    @IBOutlet weak var leagueName: UILabel!
     @IBOutlet weak var leagueBadge: UIImageView!
     @IBOutlet weak var watchLeagueVideo: UIButton!
     override func awakeFromNib() {
@@ -23,8 +23,7 @@ class CustomLeaguesTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
-        
-
+    
     }
     
 }

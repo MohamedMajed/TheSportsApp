@@ -52,34 +52,11 @@ class LeaguesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let leaguesDetails = storyboard?.instantiateViewController(withIdentifier: "LeaguesDetailsViewController") as! LeaguesDetailsViewController
         
+        leaguesDetails.league = Leagues[indexPath.row]["strLeague"] as! String
+        leaguesDetails.idLeague = Leagues[indexPath.row]["idLeague"] as! String
+        
         self.present(leaguesDetails, animated: true, completion: nil)
     }
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
 
     func AlamofireMethod (strSport: String)-> Void{
         AF.request("https://www.thesportsdb.com/api/v1/json/2/search_all_leagues.php?s=\(strSport)"
@@ -97,6 +74,7 @@ class LeaguesTableViewController: UITableViewController {
                         let array = try decoder.decode(Welcome.self , from: data!)
                         self.Leagues.removeAll();
                         self.Leagues = array.countrys
+
                         print("Sports count \(self.Leagues)")
                         /// Reload Data into grid
                         DispatchQueue.main.async {

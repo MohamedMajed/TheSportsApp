@@ -33,13 +33,13 @@ class SportsCollectionViewController: UICollectionViewController, UICollectionVi
     // MARK: UICollectionViewDataSource
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
+        
         return 1
     }
     
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
+        
         return Sports.count
     }
     
@@ -79,7 +79,6 @@ class SportsCollectionViewController: UICollectionViewController, UICollectionVi
         cell.sportImage.layer.borderColor = CGColor(red: 0.5, green: 0.5, blue: 1.0, alpha: 1.0)
         cell.sportImage.layer.borderWidth = 1
         
-        
         return cell
     }
     
@@ -118,45 +117,9 @@ class SportsCollectionViewController: UICollectionViewController, UICollectionVi
         flowLayout.invalidateLayout()
     }
     
-    // MARK: UICollectionViewDelegate
-    
-    /*
-     // Uncomment this method to specify if the specified item should be highlighted during tracking
-     override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-     return true
-     }
-     */
-    
-    /*
-     // Uncomment this method to specify if the specified item should be selected
-     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-     return true
-     }
-     */
-    
-    /*
-     // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-     override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-     return false
-     }
-     
-     override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-     return false
-     }
-     
-     override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-     
-     }
-     */
-//        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//            print("sizeForItemAt")
-//            
-//            return CGSize(width: 10, height: 5)
-//        }
     
     func AlamofireMethod ()-> Void{
-        AF.request("https://www.thesportsdb.com/api/v1/json/2/all_sports.php"
-        )
+        AF.request("https://www.thesportsdb.com/api/v1/json/2/all_sports.php")
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .responseData { response in
@@ -170,8 +133,7 @@ class SportsCollectionViewController: UICollectionViewController, UICollectionVi
                         let array = try decoder.decode(Sport.self, from: data!);
                         self.Sports.removeAll();
                         self.Sports.append(contentsOf: array.sports);
-                        print("Sports count \(self.Sports.count)");
-                        /// Reload Data into grid
+                        //print("Sports count \(self.Sports.count)");
                         DispatchQueue.main.async {
                             self.collectionView.reloadData()
                         }
