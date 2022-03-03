@@ -10,13 +10,18 @@ import Alamofire
 import Kingfisher
 
 class LeaguesTableViewController: UITableViewController {
-    
+    let indicator = UIActivityIndicatorView(style: .large)
     var Leagues = [[String: String?]]()
     
     var sport: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.indicator.center = self.view.center
+        self.view.addSubview(indicator)
+        self.indicator.startAnimating()
+        self.indicator.color = .yellow
         
         tableView.register(UINib(nibName: "CustomLeaguesTableViewCell", bundle: nil), forCellReuseIdentifier: "LeaguesCell")
         AlamofireMethod(strSport: sport!)
@@ -87,6 +92,7 @@ class LeaguesTableViewController: UITableViewController {
                         /// Reload Data into grid
                         DispatchQueue.main.async {
                             self.tableView.reloadData()
+                            self.indicator.stopAnimating()
                         }
                     }
                     catch let error as NSError {

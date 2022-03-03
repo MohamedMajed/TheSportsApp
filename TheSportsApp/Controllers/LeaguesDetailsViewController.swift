@@ -50,8 +50,11 @@ class LeaguesDetailsViewController: UIViewController, UICollectionViewDelegate, 
         
         let favLeague = Favourite(context: context)
         favLeague.leagueName = league
+        print(league)
         favLeague.leagueBadge = badge
+        print(badge)
         favLeague.youtubeURL = youtubeUrl
+        print(youtubeUrl)
         try? context.save()
     }
     
@@ -244,7 +247,9 @@ class LeaguesDetailsViewController: UIViewController, UICollectionViewDelegate, 
     
     func fetchTeams (strLeague: String)-> Void{
         let urlLeague = strLeague.replacingOccurrences(of: " ", with: "%20")
+        print("-----------------------------------------------------")
         print(urlLeague)
+        print("-----------------------------------------------------")
         AF.request("https://www.thesportsdb.com/api/v1/json/2/search_all_teams.php?l=\(urlLeague)")
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])

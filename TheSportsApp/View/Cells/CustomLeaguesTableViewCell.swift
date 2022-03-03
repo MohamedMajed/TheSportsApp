@@ -14,8 +14,9 @@ class CustomLeaguesTableViewCell: UITableViewCell {
     @IBOutlet weak var leagueBadge: UIImageView!
     
     @IBAction func youtubeTapped(_ sender: UIButton) {
-        let fullURL = "https://\(String(describing: teamDetail?.strYoutube!))"
-        if let url = URL(string: fullURL){
+//        let fullURL = "https://\(String(describing: teamDetail?.strYoutube!))"
+        let myURL = "https://www.youtube.com/channel/UCG5qGWdu8nIRZqJ_GgDwQ-w"
+        if let url = URL(string: myURL){
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }

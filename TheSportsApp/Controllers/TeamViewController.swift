@@ -108,7 +108,30 @@ class TeamViewController: UIViewController {
                 }
             
         }
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            let url3 = (self.teamDetails?.strTeamBanner) ?? URL(string: "")
+            let processor3 = DownsamplingImageProcessor(size: self.banner.bounds.size)
+                         |> RoundCornerImageProcessor(cornerRadius: 20)
+            self.banner.kf.indicatorType = .activity
+            self.banner.kf.setImage(
+                with: url3,
+                placeholder: UIImage(named: "placeholderImage"),
+                options: [
+                    .processor(processor),
+                    .scaleFactor(UIScreen.main.scale),
+                    .transition(.fade(1)),
+                    .cacheOriginalImage
+                ])
+            {
+                result in
+                switch result {
+                case .success(let value):
+                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
+                case .failure(let error):
+                    print("Job failed: \(error.localizedDescription)")
+                }
+            
+        }
             
         }
         formedYear.text = teamDetails?.intFormedYear
@@ -154,6 +177,7 @@ class TeamViewController: UIViewController {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
+    @IBOutlet weak var banner: UIImageView!
     
     /*
     // MARK: - Navigation

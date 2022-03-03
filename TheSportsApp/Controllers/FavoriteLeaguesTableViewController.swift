@@ -55,8 +55,8 @@ class FavoriteLeaguesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LeaguesCell", for: indexPath) as! CustomLeaguesTableViewCell
 
-        let url = URL(string: array[indexPath.row].leagueBadge ?? "")
-        cell.leagueBadge.kf.setImage(with: url)
+       // let url = URL(string: array[indexPath.row].leagueBadge ?? "")
+        cell.leagueBadge.image = UIImage(systemName: "photo")
         
         cell.leagueName.text = array[indexPath.row].leagueName
         cell.layer.borderWidth = 2

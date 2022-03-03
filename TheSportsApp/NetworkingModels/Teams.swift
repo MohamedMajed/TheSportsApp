@@ -22,7 +22,7 @@ struct TeamsData : Codable {
     let strStadiumLocation:String?
     let strTeamBadge:URL?
     let strTeamLogo:URL?
-    let TeamBanner:URL?
+    let strTeamBanner:URL?
     let strCountry:String?
     let strDescriptionEN:String?
     let strTeamJersey:URL?

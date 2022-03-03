@@ -95,13 +95,24 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E840829327D0C79F00AAE237 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E88D1F7D27C5402C001E2B4C /* Main.storyboard */,
+				E88D1F8527C5402E001E2B4C /* LaunchScreen.storyboard */,
+				E88D1F9527C54EC7001E2B4C /* CollectionViewCell.xib */,
+				E831F6AA27C67A8F00BA7EC0 /* CustomLeaguesTableViewCell.xib */,
+				E88D1F8327C5402E001E2B4C /* Assets.xcassets */,
+				E861E9DA27CAB54400556E84 /* Cells */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		E861E9DA27CAB54400556E84 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
 				E88D1F9427C54EC7001E2B4C /* CollectionViewCell.swift */,
-				E88D1F9527C54EC7001E2B4C /* CollectionViewCell.xib */,
 				E831F6A927C67A8F00BA7EC0 /* CustomLeaguesTableViewCell.swift */,
-				E831F6AA27C67A8F00BA7EC0 /* CustomLeaguesTableViewCell.xib */,
 				E831803A27CD6FCF0040AE43 /* UpComingCollectionViewCell.swift */,
 				E831803D27CD6FF90040AE43 /* LatestResultsCollectionViewCell.swift */,
 				E831803F27CD700B0040AE43 /* TeamsCollectionViewCell.swift */,
@@ -156,14 +167,11 @@
 			children = (
 				E88D1F7727C5402C001E2B4C /* AppDelegate.swift */,
 				E88D1F7927C5402C001E2B4C /* SceneDelegate.swift */,
-				E88D1F7D27C5402C001E2B4C /* Main.storyboard */,
-				E88D1F8327C5402E001E2B4C /* Assets.xcassets */,
-				E88D1F8527C5402E001E2B4C /* LaunchScreen.storyboard */,
 				E88D1F8827C5402E001E2B4C /* Info.plist */,
 				E88D1F8027C5402C001E2B4C /* TheSportsApp.xcdatamodeld */,
 				E88D1F8E27C5487E001E2B4C /* TabBarViewController.swift */,
+				E840829327D0C79F00AAE237 /* View */,
 				E874F46C27C7FB6900C9492A /* Controllers */,
-				E861E9DA27CAB54400556E84 /* Cells */,
 				E874F46B27C7CAFF00C9492A /* NetworkingModels */,
 			);
 			path = TheSportsApp;

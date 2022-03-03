@@ -8,10 +8,12 @@
 import UIKit
 import Alamofire
 import Kingfisher
+import Reachability
 
 
 class SportsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-  
+    let reachability = try! Reachability()
+    let indicator = UIActivityIndicatorView(style: .large)
     var Sports :Array<SportElement> = [SportElement]()
     
     override func viewDidLoad() {
@@ -21,10 +23,38 @@ class SportsCollectionViewController: UICollectionViewController, UICollectionVi
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.yellow]
         navigationController?.navigationBar.prefersLargeTitles = true
         
+        
+        self.indicator.center = self.view.center
+        self.view.addSubview(indicator)
+        self.indicator.startAnimating()
+        self.indicator.color = .yellow
+        
+        reachability.whenReachable = { reachability in
+            if reachability.connection == .wifi {
+                print("Reachable via WiFi")
+                self.AlamofireMethod()
+                self.collectionView.alwaysBounceVertical = true
+                
+            } else {
+                print("Reachable via Cellular")
+            }
+        }
+        reachability.whenUnreachable = { _ in
+            print("Not reachable")
+            let alert = UIAlertController(title: "Error", message: "No Internet Connection", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+
+        do {
+            try reachability.startNotifier()
+        } catch {
+            print("Unable to start notifier")
+        }
+        
         collectionView.register(UINib(nibName: "CollectionViewCell", bundle: .main), forCellWithReuseIdentifier: "cell")
         
-        AlamofireMethod()
-        collectionView.alwaysBounceVertical = true
+        
         
         
     }
@@ -138,6 +168,7 @@ class SportsCollectionViewController: UICollectionViewController, UICollectionVi
                         //print("Sports count \(self.Sports.count)");
                         DispatchQueue.main.async {
                             self.collectionView.reloadData()
+                            self.indicator.stopAnimating()
                         }
                     }
                     catch let error as NSError {
