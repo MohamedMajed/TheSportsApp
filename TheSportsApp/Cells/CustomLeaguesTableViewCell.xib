@@ -29,21 +29,17 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S4w-pp-Sb6">
-                        <rect key="frame" x="126" y="95" width="256" height="37"/>
+                        <rect key="frame" x="231" y="95" width="47" height="37"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" systemColor="systemPinkColor"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="0.32993250966861548" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <state key="normal" title="Button"/>
-                        <buttonConfiguration key="configuration" style="plain">
-                            <attributedString key="attributedTitle">
-                                <fragment content="Watch Youtube">
-                                    <attributes>
-                                        <font key="NSFont" size="20" name="Helvetica"/>
-                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                    </attributes>
-                                </fragment>
-                            </attributedString>
+                        <buttonConfiguration key="configuration" style="plain" image="video" catalog="system">
+                            <attributedString key="attributedTitle"/>
                             <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </buttonConfiguration>
+                        <connections>
+                            <action selector="youtubeTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="wH8-Ik-7hh"/>
+                        </connections>
                     </button>
                 </subviews>
             </tableViewCellContentView>
@@ -52,15 +48,12 @@
             <connections>
                 <outlet property="leagueBadge" destination="63T-VL-hJx" id="P7g-UP-djJ"/>
                 <outlet property="leagueName" destination="R4D-GV-en7" id="nFE-gj-EWW"/>
-                <outlet property="watchLeagueVideo" destination="S4w-pp-Sb6" id="U6h-w8-cUw"/>
             </connections>
-            <point key="canvasLocation" x="182.60869565217394" y="95.758928571428569"/>
+            <point key="canvasLocation" x="286.95652173913044" y="91.741071428571431"/>
         </tableViewCell>
     </objects>
     <resources>
-        <systemColor name="systemPinkColor">
-            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
+        <image name="video" catalog="system" width="128" height="83"/>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

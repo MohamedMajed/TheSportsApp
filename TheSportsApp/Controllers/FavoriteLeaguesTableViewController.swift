@@ -6,13 +6,36 @@
 //
 
 import UIKit
+import Kingfisher
 
 class FavoriteLeaguesTableViewController: UITableViewController {
-
+    
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var array = [Favourite]()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         tableView.register(UINib(nibName: "CustomLeaguesTableViewCell", bundle: nil), forCellReuseIdentifier: "LeaguesCell")
+    }
+    
+    func fetchResults(){
+        
+        do {
+           array =  try context.fetch(Favourite.fetchRequest())
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        } catch  {
+            print(error)
+        }
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchResults()
     }
 
     // MARK: - Table view data source
@@ -24,14 +47,21 @@ class FavoriteLeaguesTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return 4    }
+        return array.count
+        
+    }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LeaguesCell", for: indexPath) as! CustomLeaguesTableViewCell
 
-        cell.leagueBadge.image = UIImage(named: "TheGodFather")
-        cell.leagueName.text = "Premier League"
+        let url = URL(string: array[indexPath.row].leagueBadge ?? "")
+        cell.leagueBadge.kf.setImage(with: url)
+        
+        cell.leagueName.text = array[indexPath.row].leagueName
+        cell.layer.borderWidth = 2
+        cell.layer.borderColor = CGColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.5)
+        cell.layer.cornerRadius = 20
 
         return cell
     }
@@ -54,17 +84,32 @@ class FavoriteLeaguesTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
+            
+            context.delete(array[indexPath.row])
+            array.remove(at: indexPath.row)
+            save()
+            
+            
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    */
+    func save(){
+        do {
+            try context.save()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        } catch{
+            print(error)
+        }
+    }
+    
 
     /*
     // Override to support rearranging the table view.

@@ -20,6 +20,7 @@ class LeaguesTableViewController: UITableViewController {
         
         tableView.register(UINib(nibName: "CustomLeaguesTableViewCell", bundle: nil), forCellReuseIdentifier: "LeaguesCell")
         AlamofireMethod(strSport: sport!)
+        
     }
 
     // MARK: - Table view data source
@@ -43,23 +44,30 @@ class LeaguesTableViewController: UITableViewController {
         cell.leagueBadge.kf.setImage(with: url)
        
         cell.leagueName.text = Leagues[indexPath.row]["strLeague"] as! String
+        cell.layer.borderWidth = 2
+        cell.layer.borderColor = CGColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.5)
+        cell.layer.cornerRadius = 20
 
         return cell
     }
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
     }
+    
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let leaguesDetails = storyboard?.instantiateViewController(withIdentifier: "LeaguesDetailsViewController") as! LeaguesDetailsViewController
         
         leaguesDetails.league = Leagues[indexPath.row]["strLeague"] as! String
         leaguesDetails.idLeague = Leagues[indexPath.row]["idLeague"] as! String
-        
+        leaguesDetails.badge = Leagues[indexPath.row]["strThumb"] as? String
+        leaguesDetails.youtubeUrl = Leagues[indexPath.row]["strYoutube"] as! String
+        tableView.deselectRow(at: indexPath, animated: false)
         self.present(leaguesDetails, animated: true, completion: nil)
     }
 
     func AlamofireMethod (strSport: String)-> Void{
-        AF.request("https://www.thesportsdb.com/api/v1/json/2/search_all_leagues.php?s=\(strSport)"
+        AF.request("https://www.thesportsdb.com/api/v1/json/2/search_all_leagues.php?c=England&s=\(strSport)"
         )
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])

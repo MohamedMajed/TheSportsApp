@@ -8,19 +8,29 @@
 import Foundation
 
 struct TeamsModel : Codable {
+    
     let teams: [TeamsData]
 }
 
 struct TeamsData : Codable {
     
-    let strTeam:String
-    let strSport:String
-    let strLeague:String
-    let strStadium:String
-    let strStadiumThumb:String
-    let strStadiumLocation:String
-    let strTeamBadge:String
-    let strTeamLogo:String
-    let TeamBanner:String
-    
+    let strTeam:String?
+    let strSport:String?
+    let strLeague:String?
+    let strStadium:String?
+    let strStadiumThumb:URL?
+    let strStadiumLocation:String?
+    let strTeamBadge:URL?
+    let strTeamLogo:URL?
+    let TeamBanner:URL?
+    let strCountry:String?
+    let strDescriptionEN:String?
+    let strTeamJersey:URL?
+    let strFacebook:String?
+    let strTwitter:String?
+    let strInstagram:String?
+    let strWebsite:String?
+    let strYoutube:String?
+    let intFormedYear:String?
+    let intStadiumCapacity:String?
 }

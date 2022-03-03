@@ -84,6 +84,8 @@ class SportsCollectionViewController: UICollectionViewController, UICollectionVi
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let leagues = self.storyboard?.instantiateViewController(withIdentifier: "LeaguesTableVC") as! LeaguesTableViewController
+        
+        
     
         leagues.sport = Sports[indexPath.row].strSport
         
