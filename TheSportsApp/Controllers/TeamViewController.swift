@@ -17,7 +17,7 @@ class TeamViewController: UIViewController {
 
         let url = (teamDetails?.strStadiumThumb) ?? URL(string: "")
         let processor = DownsamplingImageProcessor(size: stadiumImage.bounds.size)
-                     |> RoundCornerImageProcessor(cornerRadius: 20)
+                     |> RoundCornerImageProcessor(cornerRadius: 0)
         stadiumImage.kf.indicatorType = .activity
         stadiumImage.kf.setImage(
             with: url,
@@ -41,7 +41,7 @@ class TeamViewController: UIViewController {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         let url1 = (teamDetails?.strTeamBadge) ?? URL(string: "")
         let processor1 = DownsamplingImageProcessor(size: teamBadge.bounds.size)
-                     |> RoundCornerImageProcessor(cornerRadius: 20)
+                     |> RoundCornerImageProcessor(cornerRadius: 0)
         teamBadge.kf.indicatorType = .activity
         teamBadge.kf.setImage(
             with: url1,
